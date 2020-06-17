@@ -14,13 +14,13 @@ void aboutMenu() {
     cout <<"======================================================\nMEET THE CREW\n=======================================================\n\n";
                 
     SetConsoleTextAttribute(h, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN);
-    cout <<"STANLLY: LEAD PROGRAMMER AND CREATOR OF THIS SNAKE GAME\n\n";
+    cout <<"STANLLY: LEAD PROGRAMMER OF 1D ARRAY VER\n\n";
 
     SetConsoleTextAttribute(h, FOREGROUND_INTENSITY | FOREGROUND_GREEN);
     cout << "GADTARDI: ORGANIZER, DOCUMENTATION AND QUALITY ASSURANCE\n\n";
 
     SetConsoleTextAttribute(h, FOREGROUND_INTENSITY | FOREGROUND_BLUE);
-    cout << "MIKA: SECONDARY PROGRAMMER WHO STRIVES TO WIN AGAINST AI\n\n";
+    cout << "MIKA: SECONDARY PROGRAMMER WHO STRIVES TO WIN AGAINST AI\nPROGRAMMER OF VECTOR VER\n\n";
         
     SetConsoleTextAttribute(h, 15 | FOREGROUND_INTENSITY);
     cout << "=======================================================\n";
