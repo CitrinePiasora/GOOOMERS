@@ -14,7 +14,7 @@ void aboutMenu() {
     cout <<"======================================================\nMEET THE CREW\n=======================================================\n\n";
                 
     SetConsoleTextAttribute(h, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN);
-    cout <<"STANLLY: LEAD PROGRAMMER OF 1D ARRAY VER\n\n";
+    cout <<"STANLLY: LEAD PROGRAMMER AND DEBUG TESTER/FIXER\nPROGRAMMER OF 1D ARRAY VER\n\n";
 
     SetConsoleTextAttribute(h, FOREGROUND_INTENSITY | FOREGROUND_GREEN);
     cout << "GADTARDI: ORGANIZER, DOCUMENTATION AND QUALITY ASSURANCE\n\n";
