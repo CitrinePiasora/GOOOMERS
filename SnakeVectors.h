@@ -9,6 +9,9 @@ const int PLANEWIDTH          = 50; //Width
 const int INITIALSNAKELENGTH = 3; //SnakeLength
 const int FPS   = 30;
 
+#include <iostream>
+using namespace std;
+
 //Builds the snake
 struct SnakeSegment
 {
@@ -24,6 +27,7 @@ struct SnakeSegment
 
 short snakeLength = INITIALSNAKELENGTH;
 char lastDirection = 'd';
+char lastlastDir = lastDirection;
 std::vector< SnakeSegment > m_Snake;
 
 short foodX;
@@ -56,14 +60,11 @@ void VectorGame() {
     srand( (int)time( NULL ) );
     snakeLength = INITIALSNAKELENGTH;
 
+    SnakeInit();
+    NormalisePlane();
+    FoodInit();
+
     while(true) {
-
-    
-        SnakeInit();
-        NormalisePlane();
-        
-        FoodInit();
-
         for ( ;; )
         {
             clock_t start;
@@ -73,11 +74,6 @@ void VectorGame() {
             while( time < 1.0 / FPS )
             {
                 time = ( clock() - start ) / (double)CLOCKS_PER_SEC;
-            }
-
-            if( _kbhit() ) //Can get keyboard input without pressing Enter key
-            {
-                lastDirection = _getch();
             }
 
             if( HasEatenFood() )
@@ -166,37 +162,41 @@ void FoodInit()
 //Tried to Implement a similiar code to yours so the snake wont die doing a 180 noscope
 //Doesnt work so i reverted it back to normal
 void Move()
-{
-    if( lastDirection == 'd' ) //Snake moves to the right
+{ 
+    if( _kbhit() ) //Can get keyboard input without pressing Enter key
+            {
+                lastlastDir = lastDirection;
+                lastDirection = _getch();
+            }
+
+    SnakeSegment segment = m_Snake.at( m_Snake.size() - 1 ); 
+
+    if( lastDirection == 'd' && lastlastDir != 'a' ) //Snake moves to the right
     {
-        SnakeSegment segment = m_Snake.at( m_Snake.size() - 1 ); 
         segment.x++;
         m_Snake.push_back( segment );
         plane[ segment.y * PLANEWIDTH + segment.x ] = 'O';
 
         DeleteLastSnakeSegment();
     }
-    else if( lastDirection == 's' ) //Snake moves down
+    else if( lastDirection == 's' && lastlastDir != 'w' ) //Snake moves down
     {
-        SnakeSegment segment = m_Snake.at( m_Snake.size() - 1 );
         segment.y++;
         m_Snake.push_back( segment );
         plane[ segment.y * PLANEWIDTH + segment.x ] = 'O';
 
         DeleteLastSnakeSegment();
     }
-    else if(lastDirection == 'a') //Snake moves to the left
+    else if(lastDirection == 'a' && lastlastDir != 'd' ) //Snake moves to the left
     {
-        SnakeSegment segment = m_Snake.at( m_Snake.size() - 1 );
         segment.x--;
         m_Snake.push_back( segment );
         plane[ segment.y * PLANEWIDTH + segment.x ] = 'O';
 
         DeleteLastSnakeSegment();
     }
-    else if( lastDirection == 'w' ) //Snake moves up
+    else if( lastDirection == 'w' && lastlastDir != 's' ) //Snake moves up
     {
-        SnakeSegment segment = m_Snake.at( m_Snake.size() - 1 );
         segment.y--;
         m_Snake.push_back( segment );
         plane[ segment.y * PLANEWIDTH + segment.x ] = 'O';
@@ -204,10 +204,6 @@ void Move()
         DeleteLastSnakeSegment();
     }
 }
-
-//Notes to Stanlly:
-//Tried to implement this but failed :(
-//Delete this if its not working
 
 
 void DeleteLastSnakeSegment()
@@ -254,10 +250,12 @@ bool Won()
 bool Lost()
 {
     SnakeSegment segment = m_Snake.at( m_Snake.size() - 1 ); //First element of snake
-	
 	//Allows the snake to pass through the walls
-     if (segment.x >= PLANEWIDTH) segment.x = 0; else if (segment.x < 0) segment.x = PLANEWIDTH - 1;
-     if (segment.y >= PLANEHEIGHT) segment.y = 0; else if (segment.y < 0) segment.y = PLANEHEIGHT - 1;
+    if (segment.x >= PLANEWIDTH) segment.x = 0; else if (segment.x < 0) segment.x = PLANEWIDTH - 1;
+    if (segment.y >= PLANEHEIGHT) segment.y = 0; else if (segment.y < 0) segment.y = PLANEHEIGHT - 1;
+
+    cout << "x: " << segment.x << " " << "y: " << segment.y << endl;
+    
     for( short i = 0; i < m_Snake.size() - 1; i++ ) //Snake collides with itself
     {
         SnakeSegment temp = m_Snake[ i ];
