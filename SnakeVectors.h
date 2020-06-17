@@ -250,9 +250,9 @@ bool Won()
 bool Lost()
 {
     SnakeSegment segment = m_Snake.at( m_Snake.size() - 1 ); //First element of snake
-	//Allows the snake to pass through the walls
-    if (segment.x >= PLANEWIDTH) segment.x = 0; else if (segment.x < 0) segment.x = PLANEWIDTH - 1;
-    if (segment.y >= PLANEHEIGHT) segment.y = 0; else if (segment.y < 0) segment.y = PLANEHEIGHT - 1;
+	//Makes the wall solid
+    if( segment.x < 0 || segment.x > PLANEWIDTH - 1 ||
+        segment.y < 0 || segment.y > PLANEHEIGHT - 1 ) return true; //if colides with boundries
 
     cout << "x: " << segment.x << " " << "y: " << segment.y << endl;
     
