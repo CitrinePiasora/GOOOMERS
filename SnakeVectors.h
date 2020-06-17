@@ -253,8 +253,6 @@ bool Lost()
 	//Makes the wall solid
     if( segment.x < 0 || segment.x > PLANEWIDTH - 1 ||
         segment.y < 0 || segment.y > PLANEHEIGHT - 1 ) return true; //if colides with boundries
-
-    cout << "x: " << segment.x << " " << "y: " << segment.y << endl;
     
     for( short i = 0; i < m_Snake.size() - 1; i++ ) //Snake collides with itself
     {
